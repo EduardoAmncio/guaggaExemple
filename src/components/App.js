@@ -24,7 +24,7 @@ const App = () => {
                     width: '100%',
 
                     border: '3px solid green',
-                }} width="1640" height="880" />
+                }} width="640" height="480" />
                 {scanning ? <Scanner
                     decoders={[
                         'i2of5_reader',
