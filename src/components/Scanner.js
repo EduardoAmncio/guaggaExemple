@@ -69,7 +69,8 @@ const Scanner = ({
             if (result.box) {
                 Quagga.ImageDebug.drawPath(result.box, { x: 0, y: 1 }, drawingCtx, { color: 'blue', lineWidth: 2 });
             }
-            if (result.codeResult && result.codeResult.code) {
+            if (result.codeResult && result.codeResult.code && result.codeResult.code.length >= 44) {
+                console.log(result.codeResult.code)
                 // const validated = barcodeValidator(result.codeResult.code);
                 // const validated = validateBarcode(result.codeResult.code);
                 // Quagga.ImageDebug.drawPath(result.line, { x: 'x', y: 'y' }, drawingCtx, { color: validated ? 'green' : 'red', lineWidth: 3 });
