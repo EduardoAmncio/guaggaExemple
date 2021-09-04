@@ -7,7 +7,7 @@ const devices = navigator.mediaDevices.enumerateDevices().then(function(devices)
     devices.forEach(function(device) {
         var z = document.createElement('a'); 
         var br = document.createElement('br');// is a node
-        z.innerHTML = JSON.stringify(device);
+        z.innerHTML = 'Comeco: ' + JSON.stringify(device);
        
         document.getElementById('corpo').appendChild(z)
         document.getElementById('corpo').appendChild(br)
@@ -45,11 +45,12 @@ function getMedianOfCodeErrors(decodedCodes) {
     const errors = decodedCodes.filter(x => x.error !== undefined).map(x => x.error);
     const medianOfErrors = getMedian(errors);
     return medianOfErrors;
+
 }
 
 const defaultConstraints = {
-    width: 640,
-    height: 480,
+    width: 2400,
+    height: 1080,
 
     focusMode: 'continuous',
     
