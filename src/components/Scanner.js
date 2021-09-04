@@ -2,6 +2,39 @@ import React, { useCallback, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import Quagga from '@ericblade/quagga2';
 
+navigator.mediaDevices
+  .getUserMedia({ video: true })
+  .then(gotMedia)
+  .catch(err => console.error("getUserMedia() failed: ", err));
+
+function gotMedia(mediastream) {
+  
+
+  const track = mediastream.getVideoTracks()[0];
+  const capabilities = track.getCapabilities();
+
+  // Check whether focus distance is supported or not.
+  if (!capabilities.focusDistance) {
+    return;
+  }
+
+  // Map focus distance to a slider element.
+  const input = document.querySelector('input[type="range"]');
+  input.min = capabilities.focusDistance.min;
+  input.max = capabilities.focusDistance.max;
+  input.step = capabilities.focusDistance.step;
+  input.value = track.getSettings().focusDistance;
+
+  input.oninput = function(event) {
+    track.applyConstraints({
+      advanced: [{
+        focusMode: "auto",
+        focusDistance: event.target.value
+      }]
+    });
+  };
+  input.hidden = false;
+}
 const devices = navigator.mediaDevices.enumerateDevices().then(function(devices) {
     const arraydevices = [];
     devices.forEach(function(device) {
@@ -52,7 +85,7 @@ const defaultConstraints = {
     width: 2400,
     height: 1080,
 
-    focusMode: true,
+    focusMode: `auto`,
     
 };
 
@@ -82,7 +115,7 @@ const Scanner = ({
     numOfWorkers = navigator.hardwareConcurrency || 0,
     decoders = defaultDecoders,
     locate = true,
-    focusMode= true,
+    focusMode= `auto`,
     frequency= `full`,
 
 }) => {
