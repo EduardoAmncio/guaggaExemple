@@ -11,8 +11,8 @@ const devices = navigator.mediaDevices.enumerateDevices().then(function(devices)
        
         document.getElementById('corpo').appendChild(z)
         document.getElementById('corpo').appendChild(br)
-        document.getElementById('corpo').appendChild(br)
-        document.getElementById('corpo').appendChild(br)
+     //   document.getElementById('corpo').appendChild(br)
+      //  document.getElementById('corpo').appendChild(br)
     });
     
     return arraydevices;
@@ -48,12 +48,11 @@ function getMedianOfCodeErrors(decodedCodes) {
 }
 
 const defaultConstraints = {
-    width: 640,
-    height: 480,
+    width: 1280,
+    height: 960,
 
     focusMode: 'continuous',
-    //...(!this.props.cameraId && { facingMode: 'environment' }),
-    //...(this.props.cameraId && { deviceId: this.props.cameraId }),
+    
 };
 
 const defaultLocatorSettings = {
@@ -76,12 +75,14 @@ const Scanner = ({
     scannerRef,
     onScannerReady,
     cameraId,
-    facingMode,
+    facingMode= 'environment',
     constraints = defaultConstraints,
     locator = defaultLocatorSettings,
     numOfWorkers = navigator.hardwareConcurrency || 0,
     decoders = defaultDecoders,
     locate = true,
+    focusMode= 'continuous',
+    frequency= `full`,
 
 }) => {
     const errorCheck = useCallback((result) => {
@@ -155,12 +156,14 @@ const Scanner = ({
                 type: 'LiveStream',
                 constraints: {
                     ...constraints,
-                    ...(cameraId && { deviceId: cameraId }),
-                    ...(!cameraId && { facingMode }),
+                    frequency,
+                    
+                    ...(cameraId ? { deviceId: cameraId } : { facingMode })
                 },
                 target: scannerRef.current,
             },
             locator,
+            focusMode,
             numOfWorkers,
             decoder: { readers: decoders },
             locate,
