@@ -160,31 +160,10 @@ const Scanner = ({
                 drawingCtx.font = "24px Arial";
                 // drawingCtx.fillStyle = validated ? 'green' : 'red';
                 // drawingCtx.fillText(`${result.codeResult.code} valid: ${validated}`, 10, 50);
-                drawingCtx.fillText(result.codeResult.code, 10, 20);
-                var z = document.createElement('a'); 
-                var br = document.createElement('br');// is a node
-                z.innerHTML = 'Comeco2: ' + JSON.stringify(device);
-            
-                document.getElementById('corpo').appendChild(z)
-                document.getElementById('corpo').appendChild(br)
+                drawingCtx.fillText(result.codeResult.code, 10, 20)
                 // if (validated) {
                 //     onDetected(result);
                 // }
-                navigator.mediaDevices.enumerateDevices().then(function(devices) {
-                  devices.forEach(function(device) {
-                      console.log(`tetetes`)
-                    drawingCtx.fillText(`teste`, 10, 20);
-                    // console.log(JSON.stringify(device))
-                    // const drawingCtx = Quagga.canvas.ctx.overlay;
-                    // drawingCtx.font = "24px Arial";
-                    //  drawingCtx.fillStyle = 'green';
-                                    // drawingCtx.fillStyle = validated ? 'green' : 'red';
-                                    // drawingCtx.fillText(`${result.codeResult.code} valid: ${validated}`, 10, 50);
-                        
-                        //console.log(device.kind + ": " + device.label +
-                        //            " id = " + device.deviceId);
-                });
-})
             }
         }
     };
