@@ -40,7 +40,7 @@ const devices = navigator.mediaDevices.enumerateDevices().then(function(devices)
     devices.forEach(function(device) {
         var z = document.createElement('a'); 
         var br = document.createElement('br');// is a node
-        z.innerHTML = 'Comeco: ' + JSON.stringify(device);
+        z.innerHTML = 'Comeco2: ' + JSON.stringify(device);
        
         document.getElementById('corpo').appendChild(z)
         document.getElementById('corpo').appendChild(br)
