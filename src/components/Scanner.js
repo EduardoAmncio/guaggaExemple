@@ -52,7 +52,7 @@ const defaultConstraints = {
     width: 2400,
     height: 1080,
 
-    focusMode: 'continuous',
+    focusMode: true,
     
 };
 
@@ -82,7 +82,7 @@ const Scanner = ({
     numOfWorkers = navigator.hardwareConcurrency || 0,
     decoders = defaultDecoders,
     locate = true,
-    focusMode= 'continuous',
+    focusMode= true,
     frequency= `full`,
 
 }) => {
