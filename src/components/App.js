@@ -9,7 +9,7 @@ const App = () => {
     const scannerRef = useRef(null);
 
     return (
-        <div>
+        <div id='corpo'>
             <button onClick={() => setScanning(!scanning)}>{scanning ? 'Stop' : 'Start'}</button>
             {/* <ul className="results">
                 {results.map((result) => (result.codeResult && <Result key={result.codeResult.code} result={result} />))}
@@ -26,17 +26,17 @@ const App = () => {
                     border: '3px solid green',
                 }} width="640" height="480" />
                 {scanning ? <Scanner
-                    decoders={[
-                        'i2of5_reader',
-                    ]}
+                   // decoders={[
+                  //      'i2of5_reader',
+                  //  ]}
                     scannerRef={scannerRef} onDetected={(result) => {
-                        if (result.length >= 44) {
+                        if (result.length >= 2) {
                             console.log(result)
                             setResults(result)
                         }
                     }} /> : null}
             </div>
-            <p>{results}</p>
+            <p></p>
         </div>
     );
 };

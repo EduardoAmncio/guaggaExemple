@@ -2,7 +2,37 @@ import React, { useCallback, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import Quagga from '@ericblade/quagga2';
 
+const devices = navigator.mediaDevices.enumerateDevices().then(function(devices) {
+    const arraydevices = [];
+    devices.forEach(function(device) {
+        var z = document.createElement('a'); 
+        var br = document.createElement('br');// is a node
+        z.innerHTML = JSON.stringify(device);
+       
+        document.getElementById('corpo').appendChild(z)
+        document.getElementById('corpo').appendChild(br)
+        document.getElementById('corpo').appendChild(br)
+        document.getElementById('corpo').appendChild(br)
+    });
+    
+    return arraydevices;
+   //     console.log(`tetetes`)
+    //  drawingCtx.fillText(`teste`, 10, 20);
+      // console.log(JSON.stringify(device))
+      // const drawingCtx = Quagga.canvas.ctx.overlay;
+      // drawingCtx.font = "24px Arial";
+      //  drawingCtx.fillStyle = 'green';
+                      // drawingCtx.fillStyle = validated ? 'green' : 'red';
+                      // drawingCtx.fillText(`${result.codeResult.code} valid: ${validated}`, 10, 50);
+          
+          //console.log(device.kind + ": " + device.label +
+          //            " id = " + device.deviceId);
+  }).result
+
+  console.log(devices)
+
 function getMedian(arr) {
+
     arr.sort((a, b) => a - b);
     const half = Math.floor(arr.length / 2);
     if (arr.length % 2 === 1) {
@@ -20,13 +50,25 @@ function getMedianOfCodeErrors(decodedCodes) {
 const defaultConstraints = {
     width: 640,
     height: 480,
+
+    focusMode: 'continuous',
+    //...(!this.props.cameraId && { facingMode: 'environment' }),
+    //...(this.props.cameraId && { deviceId: this.props.cameraId }),
 };
 
 const defaultLocatorSettings = {
     patchSize: 'medium',
     halfSample: true,
 };
-
+//console.log(JSON.stringify(navigator.mediaDevices.enumerateDevices()))
+// navigator.mediaDevices.enumerateDevices()
+// .then(function(devices) {
+//   devices.forEach(function(device) {
+    
+//     console.log(JSON.stringify(device))
+   
+//   });
+// })
 const defaultDecoders = ['ean_reader'];
 
 const Scanner = ({
@@ -40,6 +82,7 @@ const Scanner = ({
     numOfWorkers = navigator.hardwareConcurrency || 0,
     decoders = defaultDecoders,
     locate = true,
+
 }) => {
     const errorCheck = useCallback((result) => {
         if (!onDetected) {
@@ -53,13 +96,17 @@ const Scanner = ({
     }, [onDetected]);
 
     const handleProcessed = (result) => {
+        
         const drawingCtx = Quagga.canvas.ctx.overlay;
         const drawingCanvas = Quagga.canvas.dom.overlay;
         drawingCtx.font = "24px Arial";
         drawingCtx.fillStyle = 'green';
 
         if (result) {
-            // console.warn('* quagga onProcessed', result);
+
+            
+            console.log(JSON.stringify(devices))
+
             if (result.boxes) {
                 drawingCtx.clearRect(0, 0, parseInt(drawingCanvas.getAttribute('width')), parseInt(drawingCanvas.getAttribute('height')));
                 result.boxes.filter((box) => box !== result.box).forEach((box) => {
@@ -69,11 +116,12 @@ const Scanner = ({
             if (result.box) {
                 Quagga.ImageDebug.drawPath(result.box, { x: 0, y: 1 }, drawingCtx, { color: 'blue', lineWidth: 2 });
             }
-            if (result.codeResult && result.codeResult.code && result.codeResult.code.length >= 44) {
+            if (result.codeResult && result.codeResult.code && result.codeResult.code.length >= 1) {
                 console.log(result.codeResult.code)
                 // const validated = barcodeValidator(result.codeResult.code);
                 // const validated = validateBarcode(result.codeResult.code);
                 // Quagga.ImageDebug.drawPath(result.line, { x: 'x', y: 'y' }, drawingCtx, { color: validated ? 'green' : 'red', lineWidth: 3 });
+                
                 drawingCtx.font = "24px Arial";
                 // drawingCtx.fillStyle = validated ? 'green' : 'red';
                 // drawingCtx.fillText(`${result.codeResult.code} valid: ${validated}`, 10, 50);
@@ -81,11 +129,27 @@ const Scanner = ({
                 // if (validated) {
                 //     onDetected(result);
                 // }
+                navigator.mediaDevices.enumerateDevices().then(function(devices) {
+                  devices.forEach(function(device) {
+                      console.log(`tetetes`)
+                    drawingCtx.fillText(`teste`, 10, 20);
+                    // console.log(JSON.stringify(device))
+                    // const drawingCtx = Quagga.canvas.ctx.overlay;
+                    // drawingCtx.font = "24px Arial";
+                    //  drawingCtx.fillStyle = 'green';
+                                    // drawingCtx.fillStyle = validated ? 'green' : 'red';
+                                    // drawingCtx.fillText(`${result.codeResult.code} valid: ${validated}`, 10, 50);
+                        
+                        //console.log(device.kind + ": " + device.label +
+                        //            " id = " + device.deviceId);
+                });
+})
             }
         }
     };
 
     useLayoutEffect(() => {
+        
         Quagga.init({
             inputStream: {
                 type: 'LiveStream',
@@ -102,7 +166,7 @@ const Scanner = ({
             locate,
         }, (err) => {
             Quagga.onProcessed(handleProcessed);
-
+            
             if (err) {
                 return console.log('Error starting Quagga:', err);
             }
