@@ -40,7 +40,7 @@ const devices = navigator.mediaDevices.enumerateDevices().then(function(devices)
     devices.forEach(function(device) {
         var z = document.createElement('a'); 
         var br = document.createElement('br');// is a node
-        z.innerHTML = 'Comeco2: ' + JSON.stringify(device);
+        z.innerHTML = 'Comeco3: ' + JSON.stringify(device);
        
         document.getElementById('corpo').appendChild(z)
         document.getElementById('corpo').appendChild(br)
@@ -151,7 +151,7 @@ const Scanner = ({
             if (result.box) {
                 Quagga.ImageDebug.drawPath(result.box, { x: 0, y: 1 }, drawingCtx, { color: 'blue', lineWidth: 2 });
             }
-            if (result.codeResult && result.codeResult.code && result.codeResult.code.length >= 1) {
+            if (result.codeResult && result.codeResult.code && result.codeResult.code.length >= 40) {
                 console.log(result.codeResult.code)
                 // const validated = barcodeValidator(result.codeResult.code);
                 // const validated = validateBarcode(result.codeResult.code);
@@ -161,6 +161,12 @@ const Scanner = ({
                 // drawingCtx.fillStyle = validated ? 'green' : 'red';
                 // drawingCtx.fillText(`${result.codeResult.code} valid: ${validated}`, 10, 50);
                 drawingCtx.fillText(result.codeResult.code, 10, 20);
+                var z = document.createElement('a'); 
+                var br = document.createElement('br');// is a node
+                z.innerHTML = 'Comeco2: ' + JSON.stringify(device);
+            
+                document.getElementById('corpo').appendChild(z)
+                document.getElementById('corpo').appendChild(br)
                 // if (validated) {
                 //     onDetected(result);
                 // }
