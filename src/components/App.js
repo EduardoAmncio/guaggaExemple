@@ -26,9 +26,9 @@ const App = () => {
                     border: '3px solid green',
                 }} width="640" height="480" />
                 {scanning ? <Scanner
-                   // decoders={[
-                  //      'i2of5_reader',
-                  //  ]}
+                    decoders={[
+                        'i2of5_reader',
+                    ]}
                     scannerRef={scannerRef} onDetected={(result) => {
                         if (result.length >= 2) {
                             console.log(result)

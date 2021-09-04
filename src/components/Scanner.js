@@ -48,8 +48,8 @@ function getMedianOfCodeErrors(decodedCodes) {
 }
 
 const defaultConstraints = {
-    width: 1280,
-    height: 960,
+    width: 640,
+    height: 480,
 
     focusMode: 'continuous',
     
